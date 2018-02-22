@@ -147,7 +147,7 @@ public class AddSetInfo {
 		 * intersect -> all caller called this variant. 
 		 */
 		
-		if (set.length > 1 && set.length >= minN) {
+		if (set.length >= minN  && ! set[0].equals(intersect)) {
 
 			// get names of individuals and iterate variant processing over all individuals
 			Object[] sampleNames = variant.getSampleNames().toArray();
