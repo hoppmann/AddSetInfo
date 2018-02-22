@@ -46,6 +46,7 @@ public class AddSetInfo {
 	
 	//// input variables
 	private int maxN;
+	private int minN;
 	private String fileInPath;
 	private String fileOutPath;
 	
@@ -117,7 +118,6 @@ public class AddSetInfo {
 		while (i.hasNext()) {
 			VariantContext variant =  i.next();
 			processCurVariant(variant); 
-			
 		}
 	}
 	
@@ -147,7 +147,7 @@ public class AddSetInfo {
 		 * intersect -> all caller called this variant. 
 		 */
 		
-		if (set.length > 1 ) {
+		if (set.length > 1 && set.length >= minN) {
 
 			// get names of individuals and iterate variant processing over all individuals
 			Object[] sampleNames = variant.getSampleNames().toArray();
@@ -291,8 +291,8 @@ public class AddSetInfo {
 	public void getArguments(String[] args) {
 		
 		
-		if (args.length != 3) {
-			log.error("Usage: AddSetInfo <vcf-in> <vcf-out> <N caller used>");
+		if (args.length != 4) {
+			log.error("Usage: AddSetInfo <vcf-in> <vcf-out> <N caller used> <min N caller for consensus>");
 			System.exit(1);
 		}
 		
@@ -305,6 +305,10 @@ public class AddSetInfo {
 		
 		// get max number of caller
 		maxN = Integer.parseInt(args[2]);
+		
+		
+		// get the number of caller needed for a call
+		minN = Integer.parseInt(args[3]);
 		
 		
 		
